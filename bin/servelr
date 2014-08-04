@@ -44,5 +44,5 @@ if(program.lr) {
 
 server.use(serveStatic(path));
 server.listen(program.port, function() {
-  console.log('Serving %s on port %d.', path, program.port);
+  console.log('Serving directory %s on port %s.', chalk.grey(path), chalk.cyan(program.port));
 });
