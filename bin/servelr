@@ -10,12 +10,18 @@ var resolve = require('path').resolve;
 program
   .version(require('../package.json').version)
   .option('-p, --port <port>', 'specify the port [3000]', Number, 3000)
+  .option('-R, --no-lr', 'disable livereload server')
   .parse(process.argv);
 
 
 var path = resolve(program.args.shift() || '.');
 
 var server = connect();
+
+if(program.lr) {
+  console.log('Livereload enabled...');
+}
+
 server.use(serveStatic(path));
 server.listen(program.port, function() {
   console.log('Serving %s on port %d.', path, program.port);
