@@ -3,6 +3,7 @@
 'use strict';
 var program = require('commander');
 var connect = require('connect');
+var connectLivereload = require('connect-livereload');
 var serveStatic = require('serve-static');
 var resolve = require('path').resolve;
 
@@ -20,7 +21,9 @@ var path = resolve(program.args.shift() || '.');
 var server = connect();
 
 if(program.lr) {
-  console.log('Livereload enabled: %d', program.lrPort);
+  server.use(connectLivereload({
+    port: program.lrPort
+  }));
 }
 
 server.use(serveStatic(path));
