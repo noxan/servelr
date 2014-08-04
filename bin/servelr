@@ -3,6 +3,7 @@
 'use strict';
 var program = require('commander');
 var connect = require('connect');
+var resolve = require('path').resolve;
 
 
 program
@@ -10,5 +11,7 @@ program
   .option('-p, --port <port>', 'specify the port [3000]', Number, 3000)
   .parse(process.argv);
 
+
+var path = resolve(program.args.shift() || '.');
 
 var server = connect();
