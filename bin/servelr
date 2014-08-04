@@ -7,6 +7,7 @@ var connectLivereload = require('connect-livereload');
 var serveStatic = require('serve-static');
 var tinylr = require('tiny-lr');
 var watch = require('node-watch');
+var chalk = require('chalk');
 var resolve = require('path').resolve;
 
 
@@ -31,16 +32,17 @@ if(program.lr) {
   }));
 
   watch(path, function(filename) {
-    console.log('File %s reloaded.', filename);
+    console.log('File', chalk.grey(filename), 'reloaded.');
     lrserver.changed({
       body: {
         files: filename
       }
     });
   });
+  console.log('Livereload listening on port %s.', chalk.cyan(program.lrPort));
 }
 
 server.use(serveStatic(path));
 server.listen(program.port, function() {
-  console.log('Serving %s on port %d.', path, program.port);
+  console.log('Serving directory %s on port %s.', chalk.grey(path), chalk.cyan(program.port));
 });
