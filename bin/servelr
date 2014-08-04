@@ -3,6 +3,7 @@
 'use strict';
 var program = require('commander');
 var connect = require('connect');
+var serveStatic = require('serve-static');
 var resolve = require('path').resolve;
 
 
@@ -15,3 +16,4 @@ program
 var path = resolve(program.args.shift() || '.');
 
 var server = connect();
+server.use(serveStatic(path));
