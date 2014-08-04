@@ -2,8 +2,12 @@
 
 'use strict';
 var program = require('commander');
+var connect = require('connect');
 
 
 program
   .version(require('../package.json').version)
   .parse(process.argv);
+
+
+var server = connect();
