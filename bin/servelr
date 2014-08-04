@@ -11,6 +11,7 @@ program
   .version(require('../package.json').version)
   .option('-p, --port <port>', 'specify the port [3000]', Number, 3000)
   .option('-R, --no-lr', 'disable livereload server')
+  .option('-r, --lr-port <port>', 'specify the livereload port [35729]', Number, 35729)
   .parse(process.argv);
 
 
@@ -19,7 +20,7 @@ var path = resolve(program.args.shift() || '.');
 var server = connect();
 
 if(program.lr) {
-  console.log('Livereload enabled...');
+  console.log('Livereload enabled: %d', program.lrPort);
 }
 
 server.use(serveStatic(path));
