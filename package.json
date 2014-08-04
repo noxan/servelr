@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/noxan/servelr/issues"
   },
-  "homepage": "https://github.com/noxan/servelr"
+  "homepage": "https://github.com/noxan/servelr",
+  "bin": {
+    "servelr": "./bin/servelr"
+  }
 }
