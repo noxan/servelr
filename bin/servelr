@@ -6,6 +6,7 @@ var connect = require('connect');
 var connectLivereload = require('connect-livereload');
 var serveStatic = require('serve-static');
 var tinylr = require('tiny-lr');
+var watch = require('node-watch');
 var resolve = require('path').resolve;
 
 
@@ -22,9 +23,21 @@ var path = resolve(program.args.shift() || '.');
 var server = connect();
 
 if(program.lr) {
+  var lrserver = tinylr();
+  lrserver.listen(program.lrPort);
+
   server.use(connectLivereload({
     port: program.lrPort
   }));
+
+  watch(path, function(filename) {
+    console.log('File %s reloaded.', filename);
+    lrserver.changed({
+      body: {
+        files: filename
+      }
+    });
+  });
 }
 
 server.use(serveStatic(path));
