@@ -39,6 +39,7 @@ if(program.lr) {
       }
     });
   });
+  console.log('Livereload listening on port %s.', chalk.cyan(program.lrPort));
 }
 
 server.use(serveStatic(path));
