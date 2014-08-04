@@ -32,7 +32,7 @@ if(program.lr) {
   }));
 
   watch(path, function(filename) {
-    console.log('File %s reloaded.', filename);
+    console.log('File', chalk.grey(filename), 'reloaded.');
     lrserver.changed({
       body: {
         files: filename
