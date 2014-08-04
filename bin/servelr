@@ -7,6 +7,7 @@ var connectLivereload = require('connect-livereload');
 var serveStatic = require('serve-static');
 var tinylr = require('tiny-lr');
 var watch = require('node-watch');
+var chalk = require('chalk');
 var resolve = require('path').resolve;
 
 
