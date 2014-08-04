@@ -25,5 +25,8 @@
   "homepage": "https://github.com/noxan/servelr",
   "bin": {
     "servelr": "./bin/servelr"
+  },
+  "dependencies": {
+    "commander": "^2.3.0"
   }
 }
