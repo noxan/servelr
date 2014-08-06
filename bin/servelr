@@ -36,6 +36,9 @@ if (program.lr) {
   }));
 
   watch(path, function(filename) {
+    if (new RegExp('((.*)~$)|(.*\.swp$)|(.*\.swo$)').exec(filename)) {
+      return;
+    }
     console.log('File', chalk.grey(filename), 'reloaded.');
     lrserver.changed({
       body: {
