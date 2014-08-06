@@ -27,7 +27,7 @@ var path = resolve(program.args.shift() || '.');
 
 var server = connect();
 
-if(program.lr) {
+if (program.lr) {
   var lrserver = tinylr();
   lrserver.listen(program.lrPort);
 
