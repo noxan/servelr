@@ -8,14 +8,18 @@ var serveStatic = require('serve-static');
 var tinylr = require('tiny-lr');
 var watch = require('node-watch');
 var chalk = require('chalk');
+var jade = require('jade');
 var resolve = require('path').resolve;
-
+var join = require('path').join;
+var url = require('url');
+var fs = require('fs');
 
 program
   .version(require('../package.json').version)
   .option('-p, --port <port>', 'specify the port [3000]', Number, 3000)
   .option('-R, --no-lr', 'disable livereload server')
   .option('-r, --lr-port <port>', 'specify the livereload port [35729]', Number, 35729)
+  .option('-J, --no-jade', 'disable jade rendering')
   .parse(process.argv);
 
 
@@ -40,6 +44,29 @@ if(program.lr) {
     });
   });
   console.log('Livereload listening on port %s.', chalk.cyan(program.lrPort));
+}
+
+if (program.jade) {
+  server.use(function(req, res, next) {
+    if (!req.url.match(/\.jade$/)) {
+      return next();
+    }
+    var filename = join(path, url.parse(req.url).pathname);
+    fs.readFile(filename, 'utf8', function(err, str) {
+      if (err) {
+        return next(err);
+      }
+      try {
+        var fn = jade.compile(str, { filename: filename });
+        var result = fn();
+        res.setHeader('Content-Type', 'text/html');
+        res.setHeader('Content-Length', Buffer.byteLength(result));
+        res.end(result);
+      } catch (err) {
+        next(err);
+      }
+    });
+  });
 }
 
 server.use(serveStatic(path));
