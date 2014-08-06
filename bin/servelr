@@ -16,6 +16,7 @@ program
   .option('-p, --port <port>', 'specify the port [3000]', Number, 3000)
   .option('-R, --no-lr', 'disable livereload server')
   .option('-r, --lr-port <port>', 'specify the livereload port [35729]', Number, 35729)
+  .option('-J, --no-jade', 'disable jade rendering')
   .parse(process.argv);
 
 
