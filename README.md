@@ -17,6 +17,7 @@ A small nodejs script to serve the current directory with livereload.
     -p, --port <port>     specify the port [3000]
     -R, --no-lr           disable livereload server
     -r, --lr-port <port>  specify the livereload port [35729]
+    -J, --no-jade         disable jade rendering
 
 ## Inspiration
 
