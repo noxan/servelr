@@ -51,6 +51,11 @@ if (program.lr) {
 
 if (program.jade) {
   server.use(function(req, res, next) {
+    if (req.url.match(/\/$/)) { // try to load index.jade for base url path
+      if (fs.existsSync(join(path, 'index.jade'))) {
+        req.url = '/index.jade';
+      }
+    }
     if (!req.url.match(/\.jade$/)) {
       return next();
     }
