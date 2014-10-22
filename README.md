@@ -19,6 +19,9 @@ A small nodejs script to serve the current directory with livereload.
     -r, --lr-port <port>  specify the livereload port [35729]
     -J, --no-jade         disable jade rendering
 
+## Jade and base path handling
+If jade is enabled servelr tries to load `index.jade` for the base path (`/`).
+
 ## Inspiration
 
 Inspired by [visionmedia's serve](https://github.com/visionmedia/serve/) but with less feature, nevertheless extended with livereload.
