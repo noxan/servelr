@@ -61,11 +61,13 @@ if (program.lr) {
 
 if (program.jade) {
   server.use(function(req, res, next) {
-    if (req.url.match(/\/$/)) { // try to load index.jade for base url path
+    // try to load index.jade for base url path
+    if (req.url === undefined || req.url === '/') {
       if (fs.existsSync(join(path, 'index.jade'))) {
         req.url = '/index.jade';
       }
     }
+    // ignore none jade files
     if (!req.url.match(/\.jade$/)) {
       return next();
     }
