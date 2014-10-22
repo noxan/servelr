@@ -20,12 +20,18 @@ program
   .option('-R, --no-lr', 'disable livereload server')
   .option('-r, --lr-port <port>', 'specify the livereload port [35729]', Number, 35729)
   .option('-J, --no-jade', 'disable jade rendering')
+  .option('-i, --ignore <regex>', 'specify regex to exclude files from livereload', String, '(~|\.sw(o|p))$')
   .parse(process.argv);
 
 
 var path = resolve(program.args.shift() || '.');
 
 var server = connect();
+
+
+if (program.ignore) {
+  program.ignore = new RegExp(program.ignore);
+}
 
 if (program.lr) {
   var lrserver = tinylr();
@@ -35,8 +41,12 @@ if (program.lr) {
     port: program.lrPort
   }));
 
+  if (!program.ignore) {
+    console.log(chalk.yellow('Ignore for livereload disabled: This may trigger unwanted or multiple reloads for any kind of file change within this directory.'));
+  }
+
   watch(path, function(filename) {
-    if (new RegExp('((.*)~$)|(.*\.swp$)|(.*\.swo$)').exec(filename)) {
+    if (!program.ignore || program.ignore.exec(filename)) {
       return;
     }
     console.log('File', chalk.grey(filename), 'reloaded.');
