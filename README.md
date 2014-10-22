@@ -1,5 +1,7 @@
 # servelr
 
+![Dependencies status](https://david-dm.org/noxan/servelr.png)
+
 A small nodejs script to serve the current directory with livereload.
 
 ## Installation
