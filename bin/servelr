@@ -9,6 +9,7 @@ var tinylr = require('tiny-lr');
 var watch = require('node-watch');
 var chalk = require('chalk');
 var jade = require('jade');
+var stylus = require('stylus');
 var resolve = require('path').resolve;
 var join = require('path').join;
 var url = require('url');
@@ -20,6 +21,7 @@ program
   .option('-R, --no-lr', 'disable livereload server')
   .option('-r, --lr-port <port>', 'specify the livereload port [35729]', Number, 35729)
   .option('-J, --no-jade', 'disable jade rendering')
+  .option('-S, --no-stylus', 'disable stylus rendering')
   .option('-i, --ignore <regex>', 'specify regex to exclude files from livereload', String, '/\.git/|(~|\.sw(o|p))$')
   .parse(process.argv);
 
@@ -88,6 +90,16 @@ if (program.jade) {
     });
   });
 }
+
+// convert .styl to .css to trick stylus.middleware
+if (program.stylus) {
+  server.use(function(req, res, next){
+    req.url = req.url.replace(/\.styl$/, '.css');
+    next();
+  });
+}
+// stylus
+server.use(stylus.middleware({ src: path }));
 
 server.use(serveStatic(path));
 server.listen(program.port, function() {
